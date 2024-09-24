@@ -17,10 +17,7 @@ const useShortcut = ({
       if (preventDefault) event.preventDefault();
       if (excludeSelectors) {
         const targetElement = event.target as HTMLElement;
-        if (
-          excludeSelectors.some((selector) => targetElement.matches(selector))
-        )
-          return;
+        if (excludeSelectors.some((selector) => document.querySelector(selector) && targetElement.matches(selector))) return;
       }
       onKey(event.key, event);
     },
@@ -29,9 +26,7 @@ const useShortcut = ({
 
   useEffect(() => {
     if (global) {
-      const handler = debounce
-        ? debouncedFn(handleKeyDown, debounce)
-        : handleKeyDown;
+      const handler = debounce ? debouncedFn(handleKeyDown, debounce): handleKeyDown;
       document.addEventListener("keydown", handler);
       return () => document.removeEventListener("keydown", handler);
     }
