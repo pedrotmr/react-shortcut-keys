@@ -231,12 +231,11 @@ describe("GameComponent", () => {
       global: true,
     });
 
-    // React.useEffect(() => {
-    //   window.addEventListener("keydown", keydownHandler);
-    //   return () => window.removeEventListener("keydown", keydownHandler);
-    // }, [keydownHandler]);
-
-    return <div data-testid="game">Game Container</div>;
+    return (
+      <div data-testid="game" onKeyDown={keydownHandler}>
+        Game Container
+      </div>
+    );
   };
 
   it("handles game control shortcuts", () => {

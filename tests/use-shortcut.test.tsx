@@ -83,7 +83,7 @@ describe("useShortcut hook", () => {
     expect(onKey).toHaveBeenCalledWith("a", expect.anything());
   });
 
-  test("prevents default behavior if preventDefault option is true", () => {
+  it("prevents default behavior if preventDefault option is true", () => {
     const { getByTestId } = renderTestComponent({
       keys: ["Enter", "a"],
       onKey,
@@ -96,7 +96,7 @@ describe("useShortcut hook", () => {
     expect(event.defaultPrevented).toBe(true);
   });
 
-  test("excludes elements matching excludeSelectors", () => {
+  it("excludes elements matching excludeSelectors", () => {
     const { getByPlaceholderText, getByText } = renderTestComponent({
       keys: ["a"],
       onKey,
@@ -111,5 +111,31 @@ describe("useShortcut hook", () => {
     fireEvent.keyDown(buttonElement, { key: "a" });
 
     expect(onKey).toHaveBeenCalledTimes(2);
+  });
+
+  it("handles cmd+k shortcut on Mac", () => {
+    Object.defineProperty(navigator, "userAgent", {
+      value:
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
+      configurable: true,
+    });
+    const { getByText } = renderTestComponent({ keys: "cmd+k", onKey });
+    const buttonElement = getByText("Click me");
+    buttonElement.focus();
+    fireEvent.keyDown(buttonElement, { key: "k", metaKey: true });
+    expect(onKey).toHaveBeenCalledTimes(1);
+  });
+
+  it("handles ctrl+k shortcut on Windows", () => {
+    Object.defineProperty(navigator, "userAgent", {
+      value:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      configurable: true,
+    });
+    const { getByText } = renderTestComponent({ keys: "ctrl+k", onKey });
+    const buttonElement = getByText("Click me");
+    buttonElement.focus();
+    fireEvent.keyDown(buttonElement, { key: "k", ctrlKey: true });
+    expect(onKey).toHaveBeenCalledWith("ctrl+k", expect.anything());
   });
 });
