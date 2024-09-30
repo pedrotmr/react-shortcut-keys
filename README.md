@@ -1,4 +1,6 @@
-# React Keyboard Shortcuts Package
+# React Shorcut Keys
+
+Live on npm: https://www.npmjs.com/package/react-shortcut-keys
 
 This package provides a way to handle keyboard shortcuts in a React application. It includes a custom hook (`useShortcut`) and a component (`Shortcut`) to facilitate the handling of single-character keyboard shortcuts, with support for case sensitivity and additional customization options.
 
