@@ -114,11 +114,7 @@ describe("useShortcut hook", () => {
   });
 
   it("handles cmd+k shortcut on Mac", () => {
-    Object.defineProperty(navigator, "userAgent", {
-      value:
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
-      configurable: true,
-    });
+    globalThis.navigator = { userAgent: "Macintosh" } as Navigator;
     const { getByText } = renderTestComponent({ keys: "cmd+k", onKey });
     const buttonElement = getByText("Click me");
     buttonElement.focus();
@@ -127,11 +123,7 @@ describe("useShortcut hook", () => {
   });
 
   it("handles ctrl+k shortcut on Windows", () => {
-    Object.defineProperty(navigator, "userAgent", {
-      value:
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-      configurable: true,
-    });
+    globalThis.navigator = { userAgent: "Windows" } as Navigator;
     const { getByText } = renderTestComponent({ keys: "ctrl+k", onKey });
     const buttonElement = getByText("Click me");
     buttonElement.focus();
