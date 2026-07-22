@@ -10,6 +10,10 @@
     "test": "jest --verbose",
     "lint": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrotmr/react-shortcut-keys"
+  },
   "dependencies": {
     "react": "^17.0.2"
   },
